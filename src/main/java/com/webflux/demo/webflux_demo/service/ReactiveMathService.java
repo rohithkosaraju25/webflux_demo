@@ -1,5 +1,7 @@
 package com.webflux.demo.webflux_demo.service;
 
+import java.time.Duration;
+
 import org.springframework.stereotype.Service;
 
 import com.webflux.demo.webflux_demo.dto.Response;
@@ -17,7 +19,8 @@ public class ReactiveMathService {
 
     public Flux<Response> getTable(int input) {
         return Flux.range(1, 10)
-                .doOnNext(i -> SleepUtil.sleepSeconds(1))
+                .delayElements(Duration.ofSeconds(1))
+                // .doOnNext(i -> SleepUtil.sleepSeconds(1))
                 .doOnNext(i -> System.out.println("reactive-math-service processing: " + i))
                 .map(i -> new Response(i * input));
     }
